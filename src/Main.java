@@ -158,11 +158,14 @@ public class Main {
                         }
                     }
                 }
-            if (Objects.equals(userInput, "5")) {
+            while (Objects.equals(userInput, "5")) {
                 double average;
-                average = OptionFiveCategoryAverage.averageCat(tempList);
-                System.out.print(tempList);
-                System.out.println(average); //Fix here check lists check if if is in right spot.
+                average = OptionFiveCategoryAverage.averageCat(optionFive(hurricaneListTokenized));
+                JOptionPane.showMessageDialog(null, "Major Florida Hurricanes 1950 - 2020\n" +
+                        "Average Storm Category by Saffir-Simpson Scale\n" +
+                        "Average Storm Category is " + average);
+                userInput = selection();
+                break;
                 }
             }
         }
