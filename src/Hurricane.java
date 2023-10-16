@@ -14,6 +14,10 @@ public class Hurricane {
         setDate(date);
 
     }
+
+    public Hurricane(String catNum){
+        setCatNum(catNum);
+    }
     //Get name
     public void setName(String name){
         this.name = name;
@@ -41,6 +45,6 @@ public class Hurricane {
 
     @Override
     public String toString(){
-        return name + " " + catNum + "\t" + date + "\n";
+        return  name + "\t" + catNum + "\t" + date + "\n";
     }
 }

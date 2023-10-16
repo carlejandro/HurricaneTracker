@@ -32,6 +32,20 @@ public class Main {
         }
     }
 
+    public static ArrayList<String> optionFive(ArrayList<String> tempList){
+        ArrayList<String> hurricaneCategories = new ArrayList<>();
+        int j = 1;
+        while (!(tempList.isEmpty())) {
+            if (j >= tempList.size()) {
+                break;
+            }
+            //tokened list hurricane get at element 1 + 3continuing
+            hurricaneCategories.add(tempList.get(j));
+            j += 3;
+        }
+        return hurricaneCategories;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         String tempString;
         //Create File from file location
@@ -40,28 +54,37 @@ public class Main {
         Scanner hurricaneListFileScanner = new Scanner(hurricaneListFile);
         ArrayList<String> hurricaneListTokenized = new ArrayList<>();
         //Read values from the first line of the file and store them in temp string
+
         while (hurricaneListFileScanner.hasNextLine()) {
             tempString = readValues(hurricaneListFileScanner);
             //Tokenize the tempstring and append to hurricane list
             readToken(tempString, hurricaneListTokenized);
-            // createArrayList(hurricaneListTokenized, hurricaneListFileScanner);
         }
+        //What's happening here is we're taking the list of tokenized strings and running the optionFive method
+        //Making a new arraylist to store the category values into
+        //The option five method takes a list in parameter iterates through
+        //Adds the value at each category number to the newly created hurricanecategories list
+        //Finally, the hurricane categories list is returned
+        OptionFiveCategoryAverage.averageCat(optionFive(hurricaneListTokenized));
+        ArrayList<String> tempList = new ArrayList<>(hurricaneListTokenized);
         //System.out.print(hurricaneListTokenized);
         //Create an arraylist of hurricane OBJECTS
         ArrayList<Hurricane> hurricaneObjects = new ArrayList<>();
         //Add a new Hurricane object into element 0 of the Hurricane ArrayList(Container of objects)
         //At Element 0 We instantiate a new hurricane object with the parameters of the tokenized sorted hurricaneListTokenized
         //as name, catnum, and date. ToString calls the method implicitly
-//        hurricaneObjects.add(new Hurricane(hurricaneListTokenized.get(0), hurricaneListTokenized.get(1), hurricaneListTokenized.get(2)));
+        //iii used to iterate through original hurricaneList
         int i = 0;
         int ii = 1;
         int iii = 2;
-        //While the searched through list isnt empty
-        while(!(hurricaneListTokenized.isEmpty())){
+        //While the searched through list isn't empty
+        while (!(hurricaneListTokenized.isEmpty())) {
             //Check to see if the list is in bounds
-            if(i >= hurricaneListTokenized.size()) {
+            if (i >= hurricaneListTokenized.size()) {
                 break;
             }
+
+
             //Add to hurricane objects by creating a new Object from hurricanelist, each token takes the place of name, category and date!
             hurricaneObjects.add(new Hurricane(hurricaneListTokenized.get(i), hurricaneListTokenized.get(ii), hurricaneListTokenized.get(iii)));
             //Increment i so we can step through the text file to get to next spot.
@@ -84,32 +107,63 @@ public class Main {
         ArrayList<Hurricane> sortedHurricaneList = new ArrayList<>(hurricaneObjects);
         String userInput = selection();
         String userInput2;
+        //System.out.println(sortedHurricaneList);
         //Option 1
-        while (ValidateInput.isNumber(userInput)){
-            if (Objects.equals(userInput, "1")){
+        while (ValidateInput.isNumber(userInput)) {
+            if (Objects.equals(userInput, "1")) {
                 userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
                         "Sort by Hurricane Name" +
                         "Press 1 for Ascending Order\n" +
                         "Press 2 for Descending Order\n");
-                while(ValidateInput.isNumber(userInput2)){
-                    if(Objects.equals(userInput2, "1")){
+                while (ValidateInput.isNumber(userInput2)) {
+                    if (Objects.equals(userInput2, "1")) {
+                        //Post the names in a list in ascending order
                         OptionOneNameSort.ascendSort(sortedHurricaneList);
+                        //reset selection
                         userInput = selection();
+                        break;
                     }
-                    if(Objects.equals(userInput2, "2")) {
-                        OptionOneNameSort.ascendSort(sortedHurricaneList);
+                    if (Objects.equals(userInput2, "2")) {
+                        //Post the names in a list in descending order
+                        OptionOneNameSort.descendSort(sortedHurricaneList);
+                        //reset selection
                         userInput = selection();
+                        break;
                         //Stop here. Fix! Problems in the validation functions. Test Descending order in case test.
                         //Script the program separately!
                     }
                 }
+            } //Option 2 Cat Sort
+            if (Objects.equals(userInput, "2")) {
+                userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
+                            "Sort by Hurricane Category Number" +
+                            "Press 1 for Ascending Order\n" +
+                            "Press 2 for Descending Order\n");
+                while (ValidateInput.isNumber(userInput2)) {
+                    if (Objects.equals(userInput2, "1")) {
+                        //Post the names in a list in ascending order
+                        OptionTwoCatSort.ascendSort(sortedHurricaneList);
+                        //reset selection
+                        userInput = selection();
+                        break;
+                    }
+                    if (Objects.equals(userInput2, "2")) {
+                        //Post the names in a list in descending order
+                        OptionTwoCatSort.descendSort(sortedHurricaneList);
+                        //reset selection
+                        userInput = selection();
+                        break;
+                        //Stop here. Fix! Problems in the validation functions. Test Descending order in case test.
+                        //Script the program separately!
+                        }
+                    }
+                }
+            if (Objects.equals(userInput, "5")) {
+                double average;
+                average = OptionFiveCategoryAverage.averageCat(tempList);
+                System.out.print(tempList);
+                System.out.println(average); //Fix here check lists check if if is in right spot.
+                }
             }
         }
-
-
-//        Collections.sort(sortedHurricaneList, Comparator.comparing(Hurricane::getName));
-//        for (Hurricane hurricane : sortedHurricaneList){
-//            System.out.print(hurricane);
-//        }
     }
-}
