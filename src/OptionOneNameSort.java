@@ -9,14 +9,35 @@ public class OptionOneNameSort {
     // The algorithm then takes the data and arranges the objects in ascending order by name.
       public static void ascendSort(ArrayList<Hurricane> sortedHurricaneList){
           Collections.sort(sortedHurricaneList, Comparator.comparing(Hurricane::getName));
+          StringBuilder sb = new StringBuilder();
           for (Hurricane hurricane : sortedHurricaneList){
-              System.out.print(hurricane);
+                  sb.append(hurricane);
           }
+          //Create a JTextArea and set the text
+          JTextArea textArea = new JTextArea("   Major Florida Hurricanes 1950-2020\n" +
+                  "   Sort by name in ascending order\n\n" + "Name\tCategory\tDate\n" +
+                  sb.toString());
+          //Create a JScrollPane to add Scroll functionality to the JtextArea
+          JScrollPane scrollPane = new JScrollPane(textArea);
+
+          //Show the JtextArea in a JOptionPane
+          JOptionPane.showMessageDialog(null, scrollPane, "ArrayList Elements", JOptionPane.INFORMATION_MESSAGE);
       }
       public static void descendSort(ArrayList<Hurricane> sortedHurricaneList){
-          Collections.sort(sortedHurricaneList, Collections.reverseOrder(Comparator.comparing(Hurricane::getCatNum)));
+          Collections.sort(sortedHurricaneList, Collections.reverseOrder(Comparator.comparing(Hurricane::getName)));
+          StringBuilder sb = new StringBuilder();
           for (Hurricane hurricane : sortedHurricaneList){
-              JOptionPane.showMessageDialog(null, hurricane);
+              sb.append(hurricane);
+              System.out.print(hurricane);
           }
+          //Create a JTextArea and set the text
+          JTextArea textArea = new JTextArea("   Major Florida Hurricanes 1950-2020\n" +
+                  "   Sort by name in descending order\n\n" + "Name\tCategory\tDate\n" +
+                  sb.toString());
+          //Create a JScrollPane to add Scroll functionality to the JtextArea
+          JScrollPane scrollPane = new JScrollPane(textArea);
+
+          //Show the JtextArea in a JOptionPane
+          JOptionPane.showMessageDialog(null, scrollPane, "ArrayList Elements", JOptionPane.INFORMATION_MESSAGE);
       }
 }
