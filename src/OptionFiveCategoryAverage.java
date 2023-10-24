@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class OptionFiveCategoryAverage {
+    //This class uses only 1 method to take in an arraylist of hurricane categories and return the average
     public static Double averageCat(ArrayList<String> hurricaneCategories){
         double counter = 0;
         int total = 0;
@@ -10,8 +11,6 @@ public class OptionFiveCategoryAverage {
             counter++;
         }
         average = total/counter;
-        System.out.println(hurricaneCategories);
-        System.out.println(average);
         return average;
     }
 

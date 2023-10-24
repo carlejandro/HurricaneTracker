@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class ValidateInput {
     public static boolean isNumber(String str) {
         try {
