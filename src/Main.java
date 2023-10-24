@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.util.*;
 import java.text.DecimalFormat;
 
+//Carlos Alexander Suarez-Martinez
+//COP2552.0M1
+//Project 4 Hurricane Tracker/Storm Statistics:
+//Write a Java program using good programming principles
+//That will read an input file and write data of major hurricanes from 1950-2020 to different output files
 public class Main {
 
+    //Selection method calls up the menu to begin the program
     public static String selection(){
         String selection;
         selection = JOptionPane.showInputDialog("Florida Major Hurricanes 1950 - 2020 \n\n" +
@@ -20,12 +26,14 @@ public class Main {
                 "Press 9 to Exit");
         return selection;
     }
-    //readValues scans the value of the next line
+    //readValues scans the value of the next line in the given text file
     public static String readValues(Scanner hurricaneListFileScanner){
         String tempstring = hurricaneListFileScanner.nextLine();
         return tempstring;
     }
     //readToken reads the next line and tokenizes the string of the next line
+    //This method is for the first constructor of hurricanes, it separates the values into Name, category, date in MM/DD/YYYY
+    //Format
     public static void readToken(String tempstring, ArrayList <String> hurricaneList){
         StringTokenizer strTokenizer = new StringTokenizer(tempstring, ",:");
         while(strTokenizer.hasMoreTokens()){
@@ -33,6 +41,7 @@ public class Main {
         }
     }
 
+    //This method isolates the month day and year into tokens using delimiters
     public static void readTokenDateIsolation(String tempstring, ArrayList <String> hurricaneList){
         StringTokenizer strTokenizer = new StringTokenizer(tempstring, ",:/");
         while(strTokenizer.hasMoreTokens()){
@@ -57,12 +66,13 @@ public class Main {
     //This makes the hurricane years list
     public static ArrayList<String> getHurricaneYearList(ArrayList<String> tempList) {
         ArrayList<String> hurricaneYears = new ArrayList<>();
+        //Set J to the final element in the year list element 4
         int j = 4;
         while (!(tempList.isEmpty())) {
             if (j >= tempList.size()) {
                 break;
             }
-            //tokened list hurricane get at element 1 + 3continuing
+            //tokened list hurricane get at element 1 + continuing
             hurricaneYears.add(tempList.get(j));
             j += 5;
         }
@@ -75,7 +85,6 @@ public class Main {
         String tempString;
         //Create File from file location
         File hurricaneListFile = new File("src/NamedFloridaHurricanes.txt");
-        File sortByNameFile = new File("src/SortByName.txt");
 
         //Attach file to scanner
         Scanner hurricaneListFileScanner = new Scanner(hurricaneListFile);
@@ -84,7 +93,6 @@ public class Main {
         ArrayList<String> hurricaneListTokenized5Parameters = new ArrayList<>();
         ArrayList<String> aggregateCategories =  new ArrayList<>();
         //Read values from the first line of the file and store them in temp string
-
         //List tokenized by 3
         while (hurricaneListFileScanner.hasNextLine()) {
             tempString = readValues(hurricaneListFileScanner);
@@ -94,7 +102,7 @@ public class Main {
         //reset the scanner to beginning by closing the first scanner
         hurricaneListFileScanner.close();
 
-        //Stopped here, this is the same thing as creating the original list of 3 parameters
+        //This is the same thing as creating the original list of 3 parameters
         //just with 5. Use the second scanner to read the values
         while (hurricaneListFileScanner2.hasNextLine()) {
             tempString = readValues(hurricaneListFileScanner2);
@@ -102,20 +110,15 @@ public class Main {
             readTokenDateIsolation(tempString, hurricaneListTokenized5Parameters);
         }
 
-        //What's happening here is we're taking the list of tokenized strings and running the optionFive method
-        //Making a new arraylist to store the category values into
-        //The option five method takes a list in parameter iterates through
-        //Adds the value at each category number to the newly created hurricanecategories list
-        //Finally, the hurricane categories list is returned
-//        OptionFiveCategoryAverage.averageCat(optionFive(hurricaneListTokenized3Parameters));
-//        ArrayList<String> tempList = new ArrayList<>(hurricaneListTokenized3Parameters);
-        //System.out.print(hurricaneListTokenized3Parameters);
-        //Create an arraylist of hurricane OBJECTS
+
+        //Create an arraylist of hurricane OBJECTS using BOTH constructors--> OVERLOAD
         ArrayList<Hurricane> hurricaneObjects = new ArrayList<>();
         ArrayList<Hurricane> hurricaneObjects5Parameters = new ArrayList<>();
         //Add a new Hurricane object into element 0 of the Hurricane ArrayList(Container of objects)
         //At Element 0 We instantiate a new hurricane object with the parameters of the tokenized sorted hurricaneListTokenized3Parameters
         //as name, catnum, and date. ToString calls the method implicitly
+        ///The is and zs represent the index of each ATTRIBUTE of the hurricane Constructor that will be iterated through
+        //For data collection
         //iii used to iterate through original hurricaneList
         int i = 0;
         int ii = 1;
@@ -141,8 +144,7 @@ public class Main {
             iii += 3;
 
         }
-        //This checks to see if the list 5 is in bounds
-
+        //This checks to see if the hurricane list with 5 is "In bounds" to avoid an inbounds element error
         while (!(hurricaneListTokenized5Parameters.isEmpty())){
             if (z >= hurricaneListTokenized5Parameters.size()) {
                 break;
@@ -157,38 +159,25 @@ public class Main {
             zzzz += 5;
             zzzzz += 5;
         }
-//        for (Hurricane hurricane : hurricaneObjects5Parameters){
-//            System.out.println(hurricane.toStringDetailed());
-//        }
-
-
-        //Finish here, proof the isolation works. Write the method for number 3! Trust the above method! You will need it!
-        //Replace with SB!
 
         //hurricane is a name, Hurricane is a class.
-//        for (Hurricane hurricane : hurricaneObjects) {
-//            //hurricaneListTokenized3Parameters.get(0); //returns easy
-//            String category = hurricane.getCatNum();
-//            String name = hurricane.getName();
-//            String date = hurricane.getDate();
-//            System.out.println(name);
-//            System.out.println(category);
-//            System.out.println(date);
-//        }
         //Make a new array list of Hurricane objects that takes the values from hurricaneObjects List
         ArrayList<Hurricane> sortedHurricaneList = new ArrayList<>(hurricaneObjects);
         ArrayList<Hurricane> sortedHurricaneList5Parameters = new ArrayList<>(hurricaneObjects5Parameters);
 
+        //Initiate the selection menu
         String userInput = selection();
         String userInput2;
-        //System.out.println(sortedHurricaneList);
+
         //Option 0 data validation loop
         while (!ValidateInput.isNumber(userInput) || Integer.parseInt(userInput) < 1 || Integer.parseInt(userInput) > 9){
             JOptionPane.showMessageDialog(null, "Please enter valid input");
             userInput = selection();
         }
-        //option 1
+
+
         while (ValidateInput.isNumber(userInput)) {
+            //Option 1 Name Sort
             if (Objects.equals(userInput, "1")) {
                 userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
                         "Sort by Hurricane Name\n" +
@@ -208,8 +197,15 @@ public class Main {
                         //reset selection
                         userInput = selection();
                         break;
-                        //Stop here. Fix! Problems in the validation functions. Test Descending order in case test.
-                        //Script the program separately!
+                    }
+                    if(ValidateInput.isNumber(userInput2)
+                            || !(Objects.equals(userInput2, "2")
+                            || !(Objects.equals(userInput2, "1")))){
+                        JOptionPane.showMessageDialog(null, "Enter Valid Number");
+                        userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
+                                "Sort by Hurricane Name\n" +
+                                "Press 1 for Ascending Order\n" +
+                                "Press 2 for Descending Order\n");
                     }
                 }
             } //Option 2 Cat Sort
@@ -232,11 +228,19 @@ public class Main {
                         //reset selection
                         userInput = selection();
                         break;
-                        //Stop here. Fix! Problems in the validation functions. Test Descending order in case test.
-                        //Script the program separately!
+                        }
+                    if (ValidateInput.isNumber(userInput2)
+                            || !(Objects.equals(userInput2, "2")
+                            || !(Objects.equals(userInput2, "1")))){
+                        JOptionPane.showMessageDialog(null, "Enter Valid Number");
+                        userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
+                                "Sort by Hurricane Category Number\n" +
+                                "Press 1 for Ascending Order\n" +
+                                "Press 2 for Descending Order\n");
                         }
                     }
                 }
+            //Option 3 Year Sort
             if (Objects.equals(userInput, "3")){
                 userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
                         "Sort by Year Hurricane Landed\n" +
@@ -251,14 +255,24 @@ public class Main {
                         break;
                     }
                     if (Objects.equals(userInput2, "2")) {
-                        //Post the names in a list in ascending order
+                        //Post the names in a list in descending order
                         OptionThreeYearSort.descendSort(sortedHurricaneList5Parameters);
                         //reset selection
                         userInput = selection();
                         break;
                     }
+                    if (ValidateInput.isNumber(userInput2)
+                            || !(Objects.equals(userInput2, "2")
+                            || !(Objects.equals(userInput2, "1")))){
+                        JOptionPane.showMessageDialog(null, "Enter Valid Number");
+                        userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
+                                "Sort by Year Hurricane Landed\n" +
+                                "Press 1 for Ascending Order\n" +
+                                "Press 2 for Descending Order\n");
+                    }
                 }
             }
+            //Option 4 Month Sort
             if (Objects.equals(userInput, "4")){
                 userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
                         "Sort by Month\n" +
@@ -273,14 +287,24 @@ public class Main {
                         break;
                     }
                     if (Objects.equals(userInput2, "2")) {
-                        //Post the names in a list in ascending order
+                        //Post the names in a list in descending order
                         OptionFourMonthSort.descendSort(sortedHurricaneList5Parameters);
                         //reset selection
                         userInput = selection();
                         break;
                     }
+                    if (ValidateInput.isNumber(userInput2)
+                            || !(Objects.equals(userInput2, "2")
+                            || !(Objects.equals(userInput2, "1")))){
+                        JOptionPane.showMessageDialog(null, "Enter Valid Number");
+                        userInput2 = JOptionPane.showInputDialog("Major Florida Hurricanes 1950 - 2020\n" +
+                                "Sort by Month\n" +
+                                "Press 1 for Ascending Order\n" +
+                                "Press 2 for Descending Order\n");
+                    }
                 }
             }
+            //Option 5 Category Average
             if (Objects.equals(userInput, "5")) {
                 double average;
                 //Make a new decimal format object to format the average
@@ -290,20 +314,30 @@ public class Main {
                         "Average Storm Category by Saffir-Simpson Scale\n\n" +
                         "Average Storm Category is " + df.format(average));
                 userInput = selection();
-                break;
                 }
+            //Option 6 Most active year
             if (Objects.equals(userInput, "6")){
                 OptionSixMostActiveYear.yearAggregation(getHurricaneYearList(hurricaneListTokenized5Parameters));
                 userInput = selection();
             }
-            while (Objects.equals(userInput, "7")) {
+            //Option 7 Aggregate Categories
+            if (Objects.equals(userInput, "7")) {
                     aggregateCategories = getHurricaneCategoryList(hurricaneListTokenized3Parameters);
                     OptionSevenCategoryAggregate.aggregation(aggregateCategories);
                     userInput = selection();
                  }
-            //Option 8
+            //Option 8 Aggregate Year
             if (Objects.equals(userInput, "8")){
                 OptionEightAggregateYear.yearAggregation(getHurricaneYearList(hurricaneListTokenized5Parameters));
+                userInput = selection();
+                }
+            //Option 9 Exit The Program
+            if (Objects.equals(userInput, "9")){
+                System.exit(0);
+                }
+            //Data Validation Post choice loop
+            while (!ValidateInput.isNumber(userInput) || Integer.parseInt(userInput) < 1 || Integer.parseInt(userInput) > 9){
+                JOptionPane.showMessageDialog(null, "Error Invalid Input Please Enter Valid number 1-9");
                 userInput = selection();
                 }
             }

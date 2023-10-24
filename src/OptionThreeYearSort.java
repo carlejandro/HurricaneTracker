@@ -66,12 +66,12 @@ public class OptionThreeYearSort {
         if(txtFile.length() > 0){
             writeToFile.write(""); //clear the contents of the file then write to it
             writeToFile.write("Year Sort Text File\n" +
-                    "This data is a list of hurricanes organized by year in ascending order.\n\n"
+                    "This data is a list of hurricanes organized by year in descending order.\n\n"
                     + sb);
         }
         else { //File is empty so write like regular
             writeToFile.write("Year Sort Text File\n" +
-                    "This data is a list of hurricanes organized by year in ascending order.\n\n"
+                    "This data is a list of hurricanes organized by year in descending order.\n\n"
                     + sb);
         }
         //close the filewrite object
